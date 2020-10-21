@@ -1,0 +1,10 @@
+{
+  "apiVersion": "2012-08-10",
+  "endpointPort": "4566",
+  "devCredentials": {
+    "accessKeyId": "ACCESS_KEY_ID",
+    "secretAccessKey": "SECRET_ACCESS_KEY",
+    "region": "us-east-1"
+  },
+  "production": false
+}

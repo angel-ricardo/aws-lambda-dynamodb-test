@@ -1,0 +1,104 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: A sample template for creating a stack with a DynamoDB table and lambda CRUD operations.
+Resources:
+  #DataBase Structure
+    Client:
+        Type: AWS::DynamoDB::Table
+        Properties:
+          TableName: Client
+          BillingMode: PAY_PER_REQUEST
+          AttributeDefinitions:
+            -
+              AttributeName: "id"
+              AttributeType: "S"
+            -
+              AttributeName: "name"
+              AttributeType: "S"
+          KeySchema:
+            -
+              AttributeName: "id"
+              KeyType: "HASH"
+            -
+              AttributeName: "name"
+              KeyType: "RANGE"
+             
+  # Roles and policies        
+    LambdaExecution:
+      Type: AWS::IAM::Role
+      Properties:
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement: 
+            - 
+              Effect: "Allow"
+              Principal:
+                Service:
+                  - "lambda.amazonaws.com"
+              Action:
+                - "sts:AssumeRole"
+        Path: /
+    
+    CloudWatchLogPolicy:
+      Type: AWS::IAM::ManagedPolicy
+      Properties:
+        Description: Policy for CloudWatch Logs
+        Path: /
+        PolicyDocument:
+          Version: 2012-10-17
+          Statement:            
+            - Effect: Allow
+              Action:
+                - "logs:CreateLogGroup"
+                - "logs:CreateLogStream"
+                - "logs:PutLogEvents"
+              Resource: "*"
+        Roles:
+          - Ref: LambdaExecution
+
+    BasicDBOperations:
+      Type: AWS::IAM::ManagedPolicy
+      Properties:
+        Description: Policy for basic database operations
+        Path: /
+        PolicyDocument:
+          Version: 2012-10-17
+          Statement:
+            - Effect: Allow
+              Action:
+                - "dynamodb:GetItem*"
+                - "dynamodb:PutItem*"
+                - "dynamodb:Query*"
+                - "dynamodb:Scan*"
+                - "dynamodb:UpdateItem*"
+              Resource: "*"
+        Roles:
+          - Ref: LambdaExecution
+        
+  # Functions Structure
+    CreateFunction:
+      Type: AWS::Lambda::Function
+      Properties:
+        FunctionName: create-user
+        Code:
+          S3Bucket: javascript.code.itl
+          S3Key: application-code.zip
+        Handler: src/user/infraestructure/lambda/create-user/index.handler
+        Runtime: nodejs12.x
+        Description: "Creates a new user in Client table"
+        Timeout: 3
+        MemorySize: 128
+        Role: !GetAtt LambdaExecution.Arn
+
+    # ReadAllFunction:
+    #   Type: AWS::Lambda::Function
+    #   Properties:
+    #     FunctionName: all
+    #     Code:
+    #       S3Bucket: java.code.itl
+    #       S3Key: AWSExample-1.0.jar
+    #     Handler: com.example.aws.all.Handler
+    #     Runtime: nodejs12.x
+    #     Description: "Get all users from Client table"
+    #     Timeout: 3
+    #     MemorySize: 128
+    #     Role: !GetAtt LambdaExecution.Arn

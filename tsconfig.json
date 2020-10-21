@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "outDir": "src",
+    "target": "es6",
+    "resolveJsonModule": true,
+    "removeComments": true
+  },
+  "include": ["app/src/**/*"],
+  "exclude": ["node_modules"]
+}

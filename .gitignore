@@ -1,0 +1,10 @@
+# Dependencies
+node_modules
+
+# Build
+/src
+built.zip
+
+# AWS::LAMBDA::FUNCTION Test
+aws/lambda/payload.json
+aws/lambda/response.json

@@ -1,0 +1,15 @@
+version: '2.1'
+
+services:
+  localstack:    
+    container_name: localstack
+    network_mode: bridge
+    image: localstack/localstack
+    ports:
+      - "4566:4566"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - SERVICES=cloudformation,iam,lambda,dynamodb,s3
+      - LAMBDA_EXECUTOR=docker
+      - DEBUG=1
