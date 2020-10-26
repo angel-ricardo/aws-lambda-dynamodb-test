@@ -1,5 +1,4 @@
-export type LambdaReponse = 
-{
-  success? : string
-  error?   : string
+export type LambdaReponse = {
+  success?: string
+  error?: string
 }

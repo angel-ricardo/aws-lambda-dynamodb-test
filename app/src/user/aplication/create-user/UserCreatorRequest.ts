@@ -1,5 +1,4 @@
-export type UserCreatorRequest = 
-{
-  firstName : string
-  lastName  : string
+export type UserCreatorRequest = {
+  firstName: string
+  lastName: string
 }

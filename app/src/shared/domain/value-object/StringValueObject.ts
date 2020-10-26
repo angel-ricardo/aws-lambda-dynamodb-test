@@ -1,5 +1,4 @@
 export abstract class StringValueObject {
-  
   private readonly value: string
 
   constructor(value: string) {
@@ -9,5 +8,4 @@ export abstract class StringValueObject {
   toString(): string {
     return this.value
   }
-
 }

@@ -3,7 +3,7 @@ import * as awsConfig from '../../../aws-config.json'
 
 let serviceConfig = {}
 
-if(!awsConfig.production) {
+if (!awsConfig.production) {
   AWS.config.update(awsConfig.devCredentials)
 
   serviceConfig = {
@@ -12,6 +12,6 @@ if(!awsConfig.production) {
   }
 }
 
-export function getDynamoDbInstance() : AWS.DynamoDB {
+export function getDynamoDbInstance(): AWS.DynamoDB {
   return new AWS.DynamoDB(serviceConfig)
 }

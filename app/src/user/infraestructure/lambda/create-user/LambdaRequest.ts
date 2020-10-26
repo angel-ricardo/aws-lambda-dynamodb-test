@@ -1,5 +1,4 @@
-export type LambdaRequest = 
-{
-  firstName : string,
-  lastName  : string
+export type LambdaRequest = {
+  firstName: string
+  lastName: string
 }
