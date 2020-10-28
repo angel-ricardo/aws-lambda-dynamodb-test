@@ -12,14 +12,12 @@ export class UserName {
   }
 
   private ensureNameOnlyContainsLetters(value: string): void {
-    ;[...value].forEach((char) => {
-      if (!this.isLetter(char))
-        throw new InvalidArgumentError('Name cannot contain special characters')
-    })
-  }
+    const valid_word = /^([a-zA-Z\s'])+$/
 
-  private isLetter(char: string): boolean {
-    return char >= 'a' && char <= 'z'
+    if(valid_word.test(value))
+      return
+
+    throw new InvalidArgumentError(`${value} is not valid as name`)    
   }
 
   public toString(): string {

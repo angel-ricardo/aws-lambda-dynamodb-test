@@ -1,6 +1,5 @@
 import { UserId } from '../value-object/UserId'
 import { UserName } from '../value-object/UserName'
-
 export class User {
   private readonly id: UserId
   private readonly name: UserName
@@ -11,7 +10,13 @@ export class User {
   }
 
   private generateId(): string {
-    return new Date().getTime().toString()
+    const random: number = Math.floor(
+      Math.random() * 100
+    )
+    return new Date()
+                .getTime()
+                .toString()
+                .concat(random.toString())
   }
 
   public getId(): UserId {
