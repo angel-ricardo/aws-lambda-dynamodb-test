@@ -1,0 +1,21 @@
+on:
+  pull_request:
+    branches:
+      - master
+env:
+  NODE_VERSION: '12.x'
+
+jobs:
+  run-test:
+    name: Test Application
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+    - name: Install Dependencies
+      run: npm install
+    - name: Run Unit Tests and Integration Tests
+      run: npm test
