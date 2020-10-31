@@ -3,9 +3,9 @@ import { spy, SinonSpy } from 'sinon'
 import * as AWS from 'aws-sdk'
 import * as AWSMock from 'aws-sdk-mock'
 import { name } from 'faker'
-import { DynamoUserRepository } from '../../../../../src/user/infraestructure/database/DynamoUserRepository'
-import { User } from '../../../../../src/user/domain/entity/User'
-import { UserName } from '../../../../../src/user/domain/value-object/UserName'
+import { DynamoUserRepository } from '../../../../src/user/infraestructure/database/DynamoUserRepository'
+import { User } from '../../../../src/user/domain/entity/User'
+import { UserName } from '../../../../src/user/domain/value-object/UserName'
 
 let dynamoDb: AWS.DynamoDB
 let dynamo_stub: SinonSpy<any[], any>

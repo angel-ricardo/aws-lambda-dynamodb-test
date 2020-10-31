@@ -4,7 +4,7 @@
   "description": "CRUD Example using AWS::LAMBDA::FUNCTION & AWS::DYNAMODB:TABLE",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --require ts-node/register --extensions ts app 'app/test/src/**/*.spec.ts'",
+    "test": "mocha --require ts-node/register --extensions ts app 'app/test/**/*.spec.ts'",
     "e2e": "mocha --require ts-node/register --extensions ts app 'aws/e2e/**/*.spec.ts'",
     "build": "npm run build:typescript && npm run build:compress && rm -r src",
     "build:typescript": "tsc --build",

@@ -1,9 +1,9 @@
 import { expect } from 'chai'
 import { stub, SinonStub } from 'sinon'
 import { MockUserRepository } from './MockUserRepository'
-import { UserCreator } from '../../../../src/user/aplication/create-user/UserCreator'
+import { UserCreator } from '../../../src/user/aplication/create-user/UserCreator'
 import { name } from 'faker'
-import { UserCreatorRequest } from '../../../../src/user/aplication/create-user/UserCreatorRequest'
+import { UserCreatorRequest } from '../../../src/user/aplication/create-user/UserCreatorRequest'
 
 let repository: MockUserRepository
 let repository_stub: SinonStub

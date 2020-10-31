@@ -1,6 +1,6 @@
-import { UserName } from '../../../../../src/user/domain/value-object/UserName'
+import { UserName } from '../../../../src/user/domain/value-object/UserName'
 import { expect } from 'chai'
-import { InvalidArgumentError } from '../../../../../src/shared/domain/error/InvalidArgumentError'
+import { InvalidArgumentError } from '../../../../src/shared/domain/error/InvalidArgumentError'
 import { name } from 'faker'
 
 type TestValues = {

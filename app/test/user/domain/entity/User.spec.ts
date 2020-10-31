@@ -1,5 +1,5 @@
-import { User } from '../../../../../src/user/domain/entity/User'
-import { UserName } from '../../../../../src/user/domain/value-object/UserName'
+import { User } from '../../../../src/user/domain/entity/User'
+import { UserName } from '../../../../src/user/domain/value-object/UserName'
 import { expect } from 'chai'
 
 describe('User::Domain::Entity::User', () => {
