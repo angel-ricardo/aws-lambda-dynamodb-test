@@ -1,5 +1,9 @@
 {
-  '**/*.+(js|ts|json)': [
+  'app/src/**/*.+(js|ts|json)': [
+    'prettier --write',
+    'git add'
+  ],
+  'app/test/**/*.spec.ts': [
     'prettier --write',
     'git add'
   ]
