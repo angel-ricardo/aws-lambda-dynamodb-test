@@ -1,4 +1,7 @@
 export type LambdaReponse = {
   success?: string
-  error?: string
+  error?: {
+    message: string,
+    reason: string
+  }
 }

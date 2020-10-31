@@ -31,7 +31,10 @@ exports.handler = async (event: LambdaRequest | undefined): Promise<LambdaRepons
     }
   } catch (error) {
     return {
-      error: `User was not registered, reason: ${error}`
+      error: {
+        message: 'User was not registered',
+        reason:  new String(error).toString()
+      }
     }
   }
 }

@@ -28,6 +28,7 @@ describe('User::Infraestructure::Lambda::CreateUser', function() {
 
     const RESPONSE_PAYLOAD = JSON.parse(response.Payload.toString())
     expect(RESPONSE_PAYLOAD).to.have.property('success')
+    expect(RESPONSE_PAYLOAD.success).to.equals(`User: ${function_payload.firstName} ${function_payload.lastName} has been registered in db`)
   })
 
   it('failed invocation usign special characters in name', async function() {
@@ -45,5 +46,9 @@ describe('User::Infraestructure::Lambda::CreateUser', function() {
 
     const RESPONSE_PAYLOAD = JSON.parse(response.Payload.toString())
     expect(RESPONSE_PAYLOAD).to.have.property('error')
+    expect(RESPONSE_PAYLOAD.error).to.have.property('message')
+    expect(RESPONSE_PAYLOAD.error).to.have.property('reason')
+    expect(RESPONSE_PAYLOAD.error.message).to.equal('User was not registered')
+    expect(RESPONSE_PAYLOAD.error.reason).to.equal(`InvalidArgumentError: ${function_payload.lastName} is not valid as name`)
   })
 })
