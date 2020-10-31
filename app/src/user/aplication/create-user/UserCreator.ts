@@ -11,9 +11,7 @@ export class UserCreator {
   }
 
   async invoke(request: UserCreatorRequest): Promise<User> {
-    const user = new User(
-      new UserName(request.firstName, request.lastName)
-    )
+    const user = new User(new UserName(request.firstName, request.lastName))
     await this.repository.create(user)
     return user
   }

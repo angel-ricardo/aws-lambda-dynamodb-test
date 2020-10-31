@@ -14,7 +14,7 @@
     "setup": "npm run build && sh aws/env-setup.sh",
     "update": "npm run build && sh aws/update-lambda-code.sh",
     "pre-commit": "npm run test && lint-staged",
-    "format": "prettier app/**/* --write"
+    "format": "npx prettier app/**/* --write"
   },
   "author": {
     "name": "Angel Ricardo Ramírez de la Torre",

@@ -10,7 +10,7 @@ let repository_stub: SinonStub
 
 describe('User::Application::UserCreator', () => {
   before(() => {
-    repository = new MockUserRepository()    
+    repository = new MockUserRepository()
   })
 
   it('invoke creator', async () => {
@@ -23,7 +23,9 @@ describe('User::Application::UserCreator', () => {
     }
 
     const user = await creator.invoke(request)
-    expect(repository_stub.calledOnce).to.be.true;
-    expect(user.getName().toString()).to.equal(`${request.firstName} ${request.lastName}`)
+    expect(repository_stub.calledOnce).to.be.true
+    expect(user.getName().toString()).to.equal(
+      `${request.firstName} ${request.lastName}`
+    )
   })
 })

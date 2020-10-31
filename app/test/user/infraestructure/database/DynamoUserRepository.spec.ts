@@ -13,28 +13,26 @@ let user: User
 
 describe('User::Infraestructure::Database::DynamoUserRepository', () => {
   before(() => {
-    user = new User(
-      new UserName(name.firstName(), name.lastName())
-    )
+    user = new User(new UserName(name.firstName(), name.lastName()))
     dynamo_stub = spy()
     AWSMock.setSDKInstance(AWS)
 
-    AWSMock.mock('DynamoDB', 'putItem', function(params, callback) {
+    AWSMock.mock('DynamoDB', 'putItem', function (params, callback) {
       dynamo_stub('putItem')
       callback(null, 'successfully put item in database')
     })
 
-    AWSMock.mock('DynamoDB', 'getItem', function(params, callback) {
+    AWSMock.mock('DynamoDB', 'getItem', function (params, callback) {
       dynamo_stub('getItem')
       callback(null, {
         Item: {
-          'id': {
+          id: {
             S: user.getId().toString()
           },
-          'name': {
+          name: {
             S: user.getName().toString()
           }
-        }        
+        }
       })
     })
 
@@ -50,10 +48,9 @@ describe('User::Infraestructure::Database::DynamoUserRepository', () => {
   it('calls to repository get method and returns user', async () => {
     let repository = new DynamoUserRepository(dynamoDb)
     const response = await repository.get(user.getId())
-    
+
     expect(dynamo_stub.calledWith('getItem')).to.be.true
     expect(response.getId().toString()).to.equals(user.getId().toString())
     expect(response.getName().toString()).to.equals(user.getName().toString())
   })
-
 })

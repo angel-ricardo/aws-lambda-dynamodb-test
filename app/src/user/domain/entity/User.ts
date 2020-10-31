@@ -10,13 +10,8 @@ export class User {
   }
 
   private generateId(): string {
-    const random: number = Math.floor(
-      Math.random() * 100
-    )
-    return new Date()
-                .getTime()
-                .toString()
-                .concat(random.toString())
+    const random: number = Math.floor(Math.random() * 100)
+    return new Date().getTime().toString().concat(random.toString())
   }
 
   public getId(): UserId {

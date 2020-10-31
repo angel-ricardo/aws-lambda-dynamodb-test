@@ -14,10 +14,9 @@ export class UserName {
   private ensureNameOnlyContainsLetters(value: string): void {
     const valid_word = /^([a-zA-Z\s'])+$/
 
-    if(valid_word.test(value))
-      return
+    if (valid_word.test(value)) return
 
-    throw new InvalidArgumentError(`${value} is not valid as name`)    
+    throw new InvalidArgumentError(`${value} is not valid as name`)
   }
 
   public toString(): string {

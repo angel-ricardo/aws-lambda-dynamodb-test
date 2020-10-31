@@ -32,7 +32,7 @@ export class DynamoUserRepository implements IUserRepository {
     const params: DynamoDB.GetItemInput = {
       TableName: 'Client',
       Key: {
-        'id': {
+        id: {
           S: id.toString()
         }
       }
@@ -40,14 +40,14 @@ export class DynamoUserRepository implements IUserRepository {
 
     try {
       const response = await this.database.getItem(params).promise()
-      const name:string = response.Item.name.S
+      const name: string = response.Item.name.S
       const [firstName, lastName] = name.split(' ')
 
       return new User(
         new UserName(firstName, lastName),
         new UserId(response.Item.id.S)
       )
-    } catch(error) {
+    } catch (error) {
       throw new Error(error)
     }
   }

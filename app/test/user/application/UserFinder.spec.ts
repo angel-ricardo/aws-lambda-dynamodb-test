@@ -14,9 +14,7 @@ describe('User::Application::UserFinder', () => {
   repository = new MockUserRepository()
   const finder = new UserFinder(repository)
 
-  const user = new User(
-    new UserName(name.firstName(), name.lastName())
-  )
+  const user = new User(new UserName(name.firstName(), name.lastName()))
 
   repository_stub = stub(repository, 'get').returns(
     new Promise<User>((resolve, reject) => resolve(user))
@@ -26,9 +24,9 @@ describe('User::Application::UserFinder', () => {
     user_id: user.getId().toString()
   }
 
-  it('invoke finder', async () => {    
+  it('invoke finder', async () => {
     await finder.invoke(request)
-    expect(repository_stub.calledOnce).to.be.true;
+    expect(repository_stub.calledOnce).to.be.true
   })
 
   it('returns right user', async () => {
@@ -36,5 +34,4 @@ describe('User::Application::UserFinder', () => {
     expect(response.getId().toString()).to.equals(user.getId().toString())
     expect(response.getName().toString()).to.equals(user.getName().toString())
   })
-
 })
