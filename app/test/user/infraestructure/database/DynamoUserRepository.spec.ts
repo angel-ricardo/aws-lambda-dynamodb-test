@@ -9,24 +9,51 @@ import { UserName } from '../../../../src/user/domain/value-object/UserName'
 
 let dynamoDb: AWS.DynamoDB
 let dynamo_stub: SinonSpy<any[], any>
+let user: User
 
 describe('User::Infraestructure::Database::DynamoUserRepository', () => {
-  beforeEach(() => {
-    dynamo_stub = spy()  
+  before(() => {
+    user = new User(
+      new UserName(name.firstName(), name.lastName())
+    )
+    dynamo_stub = spy()
     AWSMock.setSDKInstance(AWS)
+
     AWSMock.mock('DynamoDB', 'putItem', function(params, callback) {
-      dynamo_stub()
+      dynamo_stub('putItem')
       callback(null, 'successfully put item in database')
     })
-    dynamoDb = new AWS.DynamoDB()    
+
+    AWSMock.mock('DynamoDB', 'getItem', function(params, callback) {
+      dynamo_stub('getItem')
+      callback(null, {
+        Item: {
+          'id': {
+            S: user.getId().toString()
+          },
+          'name': {
+            S: user.getName().toString()
+          }
+        }        
+      })
+    })
+
+    dynamoDb = new AWS.DynamoDB()
   })
 
   it('calls to repository create method', async () => {
     let repository = new DynamoUserRepository(dynamoDb)
-    await repository.create(
-      new User(
-        new UserName(name.firstName(), name.lastName()))
-    )    
-    expect(dynamo_stub.calledOnce).to.be.true
+    await repository.create(user)
+    expect(dynamo_stub.calledWith('putItem')).to.be.true
   })
+
+  it('calls to repository get method and returns user', async () => {
+    let repository = new DynamoUserRepository(dynamoDb)
+    const response = await repository.get(user.getId())
+    
+    expect(dynamo_stub.calledWith('getItem')).to.be.true
+    expect(response.getId().toString()).to.equals(user.getId().toString())
+    expect(response.getName().toString()).to.equals(user.getName().toString())
+  })
+
 })

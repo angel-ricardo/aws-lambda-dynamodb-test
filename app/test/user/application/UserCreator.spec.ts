@@ -22,7 +22,8 @@ describe('User::Application::UserCreator', () => {
       lastName: name.lastName()
     }
 
-    await creator.invoke(request)
+    const user = await creator.invoke(request)
     expect(repository_stub.calledOnce).to.be.true;
+    expect(user.getName().toString()).to.equal(`${request.firstName} ${request.lastName}`)
   })
 })

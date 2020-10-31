@@ -4,8 +4,8 @@ export class User {
   private readonly id: UserId
   private readonly name: UserName
 
-  constructor(name: UserName) {
-    this.id = new UserId(this.generateId())
+  constructor(name: UserName, id?: UserId) {
+    this.id = id || new UserId(this.generateId())
     this.name = name
   }
 
