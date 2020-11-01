@@ -3,7 +3,6 @@ import { User } from '../../domain/entity/User'
 import { UserId } from '../../domain/value-object/UserId'
 import { IUserRepository } from '../../domain/IUserRepository'
 import { UserName } from '../../domain/value-object/UserName'
-import { UserNotFoundError } from '../../../shared/application/error/UserNotFoundError'
 
 export class DynamoUserRepository implements IUserRepository {
   protected database: DynamoDB
@@ -29,7 +28,7 @@ export class DynamoUserRepository implements IUserRepository {
     }
   }
 
-  public async get(id: UserId): Promise<User> {
+  public async get(id: UserId): Promise<User | null> {
     const params: DynamoDB.GetItemInput = {
       TableName: 'Client',
       Key: {
@@ -43,7 +42,7 @@ export class DynamoUserRepository implements IUserRepository {
       const response = await this.database.getItem(params).promise()
 
       if (response.Item === undefined)
-        throw new UserNotFoundError(`with userId = ${id.toString()}`)
+        return null
 
       const name: string = response.Item.name.S
       const [firstName, lastName] = name.split(' ')
