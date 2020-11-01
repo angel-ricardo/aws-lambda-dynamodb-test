@@ -26,13 +26,16 @@ exports.handler = async (
   try {
     validateRequest(event)
 
-    await userCreator.invoke({
+    const user = await userCreator.invoke({
       firstName: event.firstName,
       lastName: event.lastName
     })
 
     return {
-      success: `User: ${event.firstName} ${event.lastName} has been registered in db`
+      success: {
+        message: `User: ${event.firstName} ${event.lastName} has been registered in db`,
+        id: user.getId().toString()
+      }
     }
   } catch (error) {
     return {

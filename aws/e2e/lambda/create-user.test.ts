@@ -1,17 +1,23 @@
 import * as AWS from 'aws-sdk'
 import * as CONFIG from './config'
+import { UserId } from '../../../app/src/user/domain/value-object/UserId'
 import { LambdaRequest } from '../../../app/src/user/infraestructure/lambda/create-user/LambdaRequest'
 import { expect } from 'chai'
 
 AWS.config.update(CONFIG.AWS_CONFIG)
 let lambda = new AWS.Lambda(CONFIG.AWS_SERVICE_CONFIG)
 
+// TEST PARAMS
 const FUNCTION_NAME: string = 'create-user'
 let function_payload: LambdaRequest
 let function_params: AWS.Lambda.InvocationRequest
 
+// TEST EXPORT
+export let USER_ID: UserId
+
+// TEST DEFINITIONS
 describe('User::Infraestructure::Lambda::CreateUser', function () {
-  this.timeout(15000)
+  this.timeout(60000)
 
   it('success invocation usign valid name', async function () {
     function_payload = {
@@ -28,9 +34,13 @@ describe('User::Infraestructure::Lambda::CreateUser', function () {
 
     const RESPONSE_PAYLOAD = JSON.parse(response.Payload.toString())
     expect(RESPONSE_PAYLOAD).to.have.property('success')
-    expect(RESPONSE_PAYLOAD.success).to.equals(
+    expect(RESPONSE_PAYLOAD.success).to.have.property('message')
+    expect(RESPONSE_PAYLOAD.success).to.have.property('id')
+    expect(RESPONSE_PAYLOAD.success.message).to.equals(
       `User: ${function_payload.firstName} ${function_payload.lastName} has been registered in db`
     )
+    expect(RESPONSE_PAYLOAD.success.id).to.be.an('string')
+    USER_ID = new UserId(RESPONSE_PAYLOAD.success.id)
   })
 
   it('failed invocation usign special characters in name', async function () {
