@@ -42,7 +42,7 @@ export class DynamoUserRepository implements IUserRepository {
     try {
       const response = await this.database.getItem(params).promise()
 
-      if(response.Item === undefined)
+      if (response.Item === undefined)
         throw new UserNotFoundError(`with userId = ${id.toString()}`)
 
       const name: string = response.Item.name.S

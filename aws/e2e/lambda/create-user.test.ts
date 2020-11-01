@@ -10,37 +10,39 @@ const FUNCTION_NAME: string = 'create-user'
 let function_payload: LambdaRequest
 let function_params: AWS.Lambda.InvocationRequest
 
-describe('User::Infraestructure::Lambda::CreateUser', function() {
+describe('User::Infraestructure::Lambda::CreateUser', function () {
   this.timeout(15000)
 
-  it('success invocation usign valid name', async function() {
+  it('success invocation usign valid name', async function () {
     function_payload = {
       firstName: 'Angel',
       lastName: 'Ramirez'
-    }    
+    }
 
     function_params = {
       FunctionName: FUNCTION_NAME,
       Payload: JSON.stringify(function_payload)
-     };
+    }
 
     let response = await lambda.invoke(function_params).promise()
 
     const RESPONSE_PAYLOAD = JSON.parse(response.Payload.toString())
     expect(RESPONSE_PAYLOAD).to.have.property('success')
-    expect(RESPONSE_PAYLOAD.success).to.equals(`User: ${function_payload.firstName} ${function_payload.lastName} has been registered in db`)
+    expect(RESPONSE_PAYLOAD.success).to.equals(
+      `User: ${function_payload.firstName} ${function_payload.lastName} has been registered in db`
+    )
   })
 
-  it('failed invocation usign special characters in name', async function() {
+  it('failed invocation usign special characters in name', async function () {
     function_payload = {
       firstName: 'Angel',
       lastName: 'Ramírez'
-    }    
+    }
 
     function_params = {
       FunctionName: FUNCTION_NAME,
       Payload: JSON.stringify(function_payload)
-     };
+    }
 
     let response = await lambda.invoke(function_params).promise()
 
@@ -49,6 +51,8 @@ describe('User::Infraestructure::Lambda::CreateUser', function() {
     expect(RESPONSE_PAYLOAD.error).to.have.property('message')
     expect(RESPONSE_PAYLOAD.error).to.have.property('reason')
     expect(RESPONSE_PAYLOAD.error.message).to.equal('User was not registered')
-    expect(RESPONSE_PAYLOAD.error.reason).to.equal(`InvalidArgumentError: ${function_payload.lastName} is not valid as name`)
+    expect(RESPONSE_PAYLOAD.error.reason).to.equal(
+      `InvalidArgumentError: ${function_payload.lastName} is not valid as name`
+    )
   })
 })
