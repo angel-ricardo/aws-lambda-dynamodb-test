@@ -6,6 +6,7 @@ import { name } from 'faker'
 import { UserFinderRequest } from '../../../src/user/aplication/get-user/UserFinderRequest'
 import { User } from '../../../src/user/domain/entity/User'
 import { UserName } from '../../../src/user/domain/value-object/UserName'
+import { UserNotFoundError } from '../../../src/shared/application/error/UserNotFoundError'
 
 let repository: MockUserRepository
 let repository_stub: SinonStub
@@ -16,7 +17,7 @@ describe('User::Application::UserFinder', () => {
 
   const user = new User(new UserName(name.firstName(), name.lastName()))
 
-  repository_stub = stub(repository, 'get').returns(
+  repository_stub = stub(repository, 'get').returns(    
     new Promise<User>((resolve, reject) => resolve(user))
   )
 
@@ -33,5 +34,15 @@ describe('User::Application::UserFinder', () => {
     const response: User = await finder.invoke(request)
     expect(response.getId().toString()).to.equals(user.getId().toString())
     expect(response.getName().toString()).to.equals(user.getName().toString())
+  })
+
+  it('throws UserNotFoundError', async () => {
+    repository_stub.restore()
+    repository_stub = stub(repository, 'get').returns(null)
+    try {
+      await finder.invoke({user_id: '1'})
+    }catch(error){
+      expect(new String(error).toString()).to.equals(`UserNotFoundError: with userId = 1`)
+    }    
   })
 })
