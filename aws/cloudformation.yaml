@@ -11,16 +11,10 @@ Resources:
             -
               AttributeName: "id"
               AttributeType: "S"
-            -
-              AttributeName: "name"
-              AttributeType: "S"
           KeySchema:
             -
               AttributeName: "id"
               KeyType: "HASH"
-            -
-              AttributeName: "name"
-              KeyType: "RANGE"
              
   # Roles and policies        
     LambdaExecution:
@@ -89,16 +83,16 @@ Resources:
         MemorySize: 128
         Role: !GetAtt LambdaExecution.Arn
 
-    # ReadAllFunction:
-    #   Type: AWS::Lambda::Function
-    #   Properties:
-    #     FunctionName: all
-    #     Code:
-    #       S3Bucket: java.code.itl
-    #       S3Key: AWSExample-1.0.jar
-    #     Handler: com.example.aws.all.Handler
-    #     Runtime: nodejs12.x
-    #     Description: "Get all users from Client table"
-    #     Timeout: 3
-    #     MemorySize: 128
-    #     Role: !GetAtt LambdaExecution.Arn
+    ReadFunction:
+      Type: AWS::Lambda::Function
+      Properties:
+        FunctionName: get-user
+        Code:
+          S3Bucket: javascript.code.itl
+          S3Key: application-code.zip
+        Handler: src/user/infraestructure/lambda/get-user/index.handler
+        Runtime: nodejs12.x
+        Description: "Returns an user from Client table"
+        Timeout: 3
+        MemorySize: 128
+        Role: !GetAtt LambdaExecution.Arn
