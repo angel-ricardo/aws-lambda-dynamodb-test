@@ -5,5 +5,8 @@ export type LambdaReponse = {
       name: string
     }
   }
-  error?: string
+  error?: {
+    message: string
+    reason: string
+  }
 }

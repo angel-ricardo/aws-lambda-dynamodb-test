@@ -37,7 +37,10 @@ exports.handler = async (event: LambdaRequest): Promise<LambdaReponse> => {
     }
   } catch (error) {
     return {
-      error: `User not found, reason: ${error}`
+      error: {
+        message: 'User not found',
+        reason: new String(error).toString()
+      }
     }
   }
 }
