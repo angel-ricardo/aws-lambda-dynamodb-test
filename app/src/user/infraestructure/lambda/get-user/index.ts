@@ -13,7 +13,7 @@ const database = getDynamoDbInstance()
 
 function validateRequest(event: LambdaRequest) {
   if (typeof event.userId !== 'string')
-    throwRequestError('firstName', 'string', typeof event.userId)
+    throwRequestError('userId', 'string', typeof event.userId)
 }
 
 exports.handler = async (event: LambdaRequest): Promise<LambdaReponse> => {
