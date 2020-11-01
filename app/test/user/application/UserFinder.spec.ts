@@ -17,7 +17,7 @@ describe('User::Application::UserFinder', () => {
 
   const user = new User(new UserName(name.firstName(), name.lastName()))
 
-  repository_stub = stub(repository, 'get').returns(    
+  repository_stub = stub(repository, 'get').returns(
     new Promise<User>((resolve, reject) => resolve(user))
   )
 
@@ -40,9 +40,11 @@ describe('User::Application::UserFinder', () => {
     repository_stub.restore()
     repository_stub = stub(repository, 'get').returns(null)
     try {
-      await finder.invoke({user_id: '1'})
-    }catch(error){
-      expect(new String(error).toString()).to.equals(`UserNotFoundError: with userId = 1`)
-    }    
+      await finder.invoke({ user_id: '1' })
+    } catch (error) {
+      expect(new String(error).toString()).to.equals(
+        `UserNotFoundError: with userId = 1`
+      )
+    }
   })
 })

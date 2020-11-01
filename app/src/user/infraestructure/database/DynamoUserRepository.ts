@@ -41,8 +41,7 @@ export class DynamoUserRepository implements IUserRepository {
     try {
       const response = await this.database.getItem(params).promise()
 
-      if (response.Item === undefined)
-        return null
+      if (response.Item === undefined) return null
 
       const name: string = response.Item.name.S
       const [firstName, lastName] = name.split(' ')

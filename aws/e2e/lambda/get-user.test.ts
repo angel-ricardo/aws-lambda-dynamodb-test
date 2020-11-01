@@ -16,7 +16,6 @@ let function_params: AWS.Lambda.InvocationRequest
 
 // TEST EXPORT
 
-
 // TEST DEFINITIONS
 describe('User::Infraestructure::Lambda::GetUser', function () {
   this.timeout(60000)
@@ -37,10 +36,10 @@ describe('User::Infraestructure::Lambda::GetUser', function () {
     expect(RESPONSE_PAYLOAD).to.have.property('success')
     expect(RESPONSE_PAYLOAD.success).to.have.property('user')
     expect(RESPONSE_PAYLOAD.success.user).to.have.property('id')
-    expect(RESPONSE_PAYLOAD.success.user).to.have.property('name')    
+    expect(RESPONSE_PAYLOAD.success.user).to.have.property('name')
     expect(RESPONSE_PAYLOAD.success.user.id).to.be.an('string')
     expect(RESPONSE_PAYLOAD.success.user.id).to.be.equals(USER_ID)
-    expect(RESPONSE_PAYLOAD.success.user.name).to.be.an('string')    
+    expect(RESPONSE_PAYLOAD.success.user.name).to.be.an('string')
     expect(RESPONSE_PAYLOAD.success.user.name).to.be.equals(USER_NAME)
   })
 

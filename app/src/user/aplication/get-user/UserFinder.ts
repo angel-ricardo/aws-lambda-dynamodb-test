@@ -14,7 +14,7 @@ export class UserFinder {
   async invoke(request: UserFinderRequest): Promise<User> {
     const userId = new UserId(request.user_id)
     const user = await this.repository.get(userId)
-    if(user === null)
+    if (user === null)
       throw new UserNotFoundError(`with userId = ${userId.toString()}`)
     return user
   }
