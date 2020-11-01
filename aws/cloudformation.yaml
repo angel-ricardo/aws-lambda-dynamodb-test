@@ -69,7 +69,7 @@ Resources:
           - Ref: LambdaExecution
         
   # Functions Structure
-    CreateFunction:
+    UserCreatorFunction:
       Type: AWS::Lambda::Function
       Properties:
         FunctionName: create-user
@@ -83,7 +83,7 @@ Resources:
         MemorySize: 128
         Role: !GetAtt LambdaExecution.Arn
 
-    ReadFunction:
+    UserFinderFunction:
       Type: AWS::Lambda::Function
       Properties:
         FunctionName: get-user
