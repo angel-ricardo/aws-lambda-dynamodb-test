@@ -1,10 +1,11 @@
 {
   'app/src/**/*.+(js|ts|json)': [
-    'prettier --write',
-    'git add'
+    'npx prettier --write'
   ],
-  'app/test/**/*.spec.ts': [
-    'prettier --write',
-    'git add'
+  'app/test/**/*': [
+    'npx prettier --write'
+  ],
+  'aws/e2e/**/*': [
+    'npx prettier --write'
   ]
 }
