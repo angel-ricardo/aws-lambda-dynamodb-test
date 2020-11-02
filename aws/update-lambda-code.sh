@@ -2,7 +2,8 @@
 
 # ARRAY WITH FUNCTION NAMES
 declare -a function_names=("create-user" 
-                           "get-user"
+                           "get-user" 
+                           "update-user"
                           )
 
 # UPDATE LAMBDA CODE USING AWS CLI
