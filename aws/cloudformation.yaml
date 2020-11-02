@@ -106,7 +106,21 @@ Resources:
           S3Key: application-code.zip
         Handler: src/user/infraestructure/lambda/update-user/index.handler
         Runtime: nodejs12.x
-        Description: "Update an user from Client table if exists"
+        Description: "Updates an user from Client table if exists"
+        Timeout: 3
+        MemorySize: 128
+        Role: !GetAtt LambdaExecution.Arn
+
+    UserDeleterFunction:
+      Type: AWS::Lambda::Function
+      Properties:
+        FunctionName: delete-user
+        Code:
+          S3Bucket: javascript.code.itl
+          S3Key: application-code.zip
+        Handler: src/user/infraestructure/lambda/update-user/index.handler
+        Runtime: nodejs12.x
+        Description: "Deletes an user from Client table"
         Timeout: 3
         MemorySize: 128
         Role: !GetAtt LambdaExecution.Arn
