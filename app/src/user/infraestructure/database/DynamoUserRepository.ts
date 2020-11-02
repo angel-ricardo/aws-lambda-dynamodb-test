@@ -73,14 +73,17 @@ export class DynamoUserRepository implements IUserRepository {
     await this.database.updateItem(params).promise()
   }
 
-  public async delete(id: UserId): Promise<void> {
+  public async delete(id: UserId): Promise<boolean> {
     const params: DynamoDB.DeleteItemInput = {
       TableName: 'Client',
       Key: {
         id: { S: id.toString() }
-      }
+      },
+      ReturnValues: 'ALL_OLD'
     }
 
-    await this.database.deleteItem(params).promise()
+    const response = await this.database.deleteItem(params).promise()
+
+    return response.Attributes !== undefined
   }
 }
