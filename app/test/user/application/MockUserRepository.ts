@@ -14,4 +14,8 @@ export class MockUserRepository implements IUserRepository {
   public get(id: UserId): Promise<User | null> {
     throw new Error('Method not implemented.')
   }
+
+  public delete(id: UserId): Promise<void> {
+    throw new Error('Method not implemented.')
+  }
 }
