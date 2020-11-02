@@ -21,7 +21,7 @@
     "email": "angelricardo.dev@gmail.com"
   },
   "contributors": [],
-  "license": "UNLICENSED",
+  "license": "MIT",
   "devDependencies": {
     "@types/chai": "^4.2.14",
     "@types/faker": "^5.1.3",
