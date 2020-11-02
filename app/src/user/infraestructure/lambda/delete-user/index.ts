@@ -7,7 +7,6 @@ import {
   throwRequestError
 } from '../../../../shared/infraestructure/lambda/lambda-config'
 import { UserDeleter } from '../../../aplication/delete-user/UserDeleter'
-import { User } from '../../../domain/entity/User'
 
 const database = getDynamoDbInstance()
 

@@ -118,7 +118,7 @@ Resources:
         Code:
           S3Bucket: javascript.code.itl
           S3Key: application-code.zip
-        Handler: src/user/infraestructure/lambda/update-user/index.handler
+        Handler: src/user/infraestructure/lambda/delete-user/index.handler
         Runtime: nodejs12.x
         Description: "Deletes an user from Client table"
         Timeout: 3
