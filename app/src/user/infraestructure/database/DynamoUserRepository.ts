@@ -32,9 +32,7 @@ export class DynamoUserRepository implements IUserRepository {
     const params: DynamoDB.GetItemInput = {
       TableName: 'Client',
       Key: {
-        id: {
-          S: id.toString()
-        }
+        id: { S: id.toString() }
       }
     }
 
@@ -53,5 +51,25 @@ export class DynamoUserRepository implements IUserRepository {
     } catch (error) {
       throw new Error(error)
     }
+  }
+
+  public async update(user: User): Promise<void> {
+    const params: DynamoDB.UpdateItemInput = {
+      TableName: 'Client',
+      Key: {
+        id: { S: user.getId().toString() }
+      },
+      UpdateExpression: 'set #name = :name',
+      ConditionExpression: 'id = :id',
+      ExpressionAttributeNames: {
+        '#name': 'name'
+      },
+      ExpressionAttributeValues: {
+        ':name': { S: user.getName().toString() },
+        ':id': { S: user.getId().toString() }
+      }
+    }
+
+    await this.database.updateItem(params).promise()
   }
 }

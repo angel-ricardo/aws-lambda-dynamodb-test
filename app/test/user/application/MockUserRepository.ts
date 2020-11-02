@@ -3,6 +3,10 @@ import { IUserRepository } from '../../../src/user/domain/IUserRepository'
 import { UserId } from '../../../src/user/domain/value-object/UserId'
 
 export class MockUserRepository implements IUserRepository {
+  public update(user: User): Promise<void> {
+    throw new Error('Method not implemented.')
+  }
+
   public create(user: User): Promise<void> {
     throw new Error('Method not implemented.')
   }
