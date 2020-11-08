@@ -13,3 +13,4 @@ services:
       - SERVICES=cloudformation,iam,lambda,dynamodb,s3
       - LAMBDA_EXECUTOR=docker
       - DEBUG=1
+      - LAMBDA_REMOTE_DOCKER=true

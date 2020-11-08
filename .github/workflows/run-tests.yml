@@ -1,4 +1,7 @@
 on:
+  push:
+    branches:
+      - master
   pull_request:
     branches:
       - master
@@ -7,7 +10,7 @@ env:
 
 jobs:
   run-test:
-    name: Test Application
+    name: Test Application (Unit/Integration)
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -19,3 +22,31 @@ jobs:
       run: npm install
     - name: Run Unit Tests and Integration Tests
       run: npm test
+
+  run-e2e-test:
+    name: Test Application (End-to-End)
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ env.NODE_VERSION }}      
+    - name: Install Dependencies
+      run: npm install
+    - name: Run docker-compose - LocalStack
+      run: cd aws && docker-compose up -d
+    - name: Sleep for 15 seconds
+      uses: jakejarvis/wait-action@master
+      with:
+        time: '15s'
+    - name: Check running containers
+      run: docker ps -a
+    - name: Setup Cloudformation Stack in LocalStack Environment      
+      run: npm run setup
+      env:
+        AWS_ACCESS_KEY_ID: 1
+        AWS_SECRET_ACCESS_KEY: 1
+        AWS_DEFAULT_REGION: us-east-1
+    - name: Run e2e Tests
+      run: npm run e2e
